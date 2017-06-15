@@ -23,10 +23,40 @@ import unittest
 def hanoi(num_rings):
     """Pick a random element and partition around it to find kth."""
     def move_rings(nrings, col_a, col_b, col_c):
-        pass
+        if nrings <= 0:
+            return
+        # move from A to C, B is buffer
+        move_rings(nrings - 1, col_a, col_c, col_b)
+
+        cols[col_b].append(cols[col_a].pop())
+        # print('Move from ', col_a, ' to ', col_b)
+
+        # move from C to B, A is buffer
+        move_rings(nrings - 1, col_c, col_b, col_a)
 
     cols = [range(num_rings)[::-1], [], []]
 
+    move_rings(num_rings, 0, 1, 2)
+    return cols
+
+
+def hanoi2(num_rings):
+    """Pick a random element and partition around it to find kth."""
+    def move_rings(nrings, col_a, col_b, col_c):
+        if nrings <= 0:
+            return
+        # move from A to C, B is buffer
+        move_rings(nrings - 1, col_a, col_c, col_b)
+
+        cols[col_b].append(cols[col_a].pop())
+        # print('Move from ', col_a, ' to ', col_b)
+
+        # move from C to B, A is buffer
+        move_rings(nrings - 1, col_c, col_b, col_a)
+
+    cols = [range(num_rings)[::-1], [], []]
+
+    move_rings(num_rings, 0, 1, 2)
     return cols
 
 
@@ -36,8 +66,8 @@ def solution(num_rings):
     Params:
     arr:    num of rings to initialize with
     """
-    # generate all primes up to A
-    return hanoi()
+    # return hanoi(num_rings)
+    return hanoi2(num_rings)
 
 
 class Tests(unittest.TestCase):
@@ -46,12 +76,14 @@ class Tests(unittest.TestCase):
     def test_base(self):
         """Unit tests."""
         self.assertEqual(solution(0), [[], [], []])
-        self.assertEqual(solution(1), [[], [1], []])
-        self.assertEqual(solution(2), [[], [1, 2], []])
+        self.assertEqual(solution(1), [[], [0], []])
+        self.assertEqual(solution(2), [[], [1, 0], []])
 
     def test_normal(self):
         """Unit tests."""
-        self.assertEqual(solution(7), None)
+        for i in range(3, 10):
+            cols = [[], range(i)[::-1], []]
+            self.assertEqual(solution(i), cols)
 
 if __name__ == '__main__':
     unittest.main()
