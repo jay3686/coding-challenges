@@ -22,20 +22,15 @@ import unittest
 
 def hanoi(num_rings):
     """Pick a random element and partition around it to find kth."""
-    def move_rings(nrings, col_a, col_b, col_c):
+    def move_rings(nrings, source, dest, buffer):
         if nrings <= 0:
             return
-        # move from A to C, B is buffer
-        move_rings(nrings - 1, col_a, col_c, col_b)
-
-        cols[col_b].append(cols[col_a].pop())
-        # print('Move from ', col_a, ' to ', col_b)
-
-        # move from C to B, A is buffer
-        move_rings(nrings - 1, col_c, col_b, col_a)
+        move_rings(nrings - 1, source, buffer, dest)
+        cols[dest].append(cols[source].pop())
+        # print('Move from ', source, ' to ', dest)
+        move_rings(nrings - 1, buffer, dest, source)
 
     cols = [range(num_rings)[::-1], [], []]
-
     move_rings(num_rings, 0, 1, 2)
     return cols
 
