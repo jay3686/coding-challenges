@@ -21,10 +21,21 @@ import unittest
 
 def nqueens(n):
     """Return list of Unique Queen placements."""
-    def solve(row):
-        pass
+    def solve(row, cols):
+        if row >= n:
+            res.append(cols)
+            return
+        for col in range(n):
+            # check diagonal (abs(Ai - Aj) == abs(Bi - Bj))
+            for i, c in enumerate(cols):
+                if col == c or abs(col - c) == row - i:
+                    break
+            else:
+                solve(row + 1, cols + [col])
 
-    return []
+    res = []
+    solve(0, [])
+    return res
 
 
 def solution(n):
@@ -41,9 +52,9 @@ class Tests(unittest.TestCase):
 
     def test_base(self):
         """Unit tests."""
-        self.assertEqual(solution(0), [])
+        self.assertEqual(solution(0), [[]])
         self.assertEqual(solution(1), [[0]])
-        self.assertEqual(solution(4), [])
+        self.assertEqual(solution(4), [[1, 3, 0, 2], [2, 0, 3, 1]])
 
     # def test_normal(self):
     #     """Unit tests."""
