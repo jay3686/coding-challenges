@@ -40,34 +40,13 @@ def hanoi(num_rings):
     return cols
 
 
-def hanoi2(num_rings):
-    """Pick a random element and partition around it to find kth."""
-    def move_rings(nrings, col_a, col_b, col_c):
-        if nrings <= 0:
-            return
-        # move from A to C, B is buffer
-        move_rings(nrings - 1, col_a, col_c, col_b)
-
-        cols[col_b].append(cols[col_a].pop())
-        # print('Move from ', col_a, ' to ', col_b)
-
-        # move from C to B, A is buffer
-        move_rings(nrings - 1, col_c, col_b, col_a)
-
-    cols = [range(num_rings)[::-1], [], []]
-
-    move_rings(num_rings, 0, 1, 2)
-    return cols
-
-
 def solution(num_rings):
     """Print steps for solving towers of hanoi.
 
     Params:
     arr:    num of rings to initialize with
     """
-    # return hanoi(num_rings)
-    return hanoi2(num_rings)
+    return hanoi(num_rings)
 
 
 class Tests(unittest.TestCase):
