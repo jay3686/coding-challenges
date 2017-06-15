@@ -25,6 +25,10 @@ def hanoi(num_rings):
     def move_rings(nrings, col_a, col_b, col_c):
         pass
 
+    cols = [range(num_rings)[::-1], [], []]
+
+    return cols
+
 
 def solution(num_rings):
     """Print steps for solving towers of hanoi.
@@ -41,10 +45,9 @@ class Tests(unittest.TestCase):
 
     def test_base(self):
         """Unit tests."""
-        arr = range(10)
-
-        for i, v in enumerate(arr):
-            self.assertEqual(solution(1), None)
+        self.assertEqual(solution(0), [[], [], []])
+        self.assertEqual(solution(1), [[], [1], []])
+        self.assertEqual(solution(2), [[], [1, 2], []])
 
     def test_normal(self):
         """Unit tests."""
